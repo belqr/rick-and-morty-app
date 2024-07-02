@@ -25,7 +25,7 @@ export default function Pagination({
 
 	return (
 		<div className="w-full flex justify-center mt-10 font-semibold">
-			<div className="w-[280px] md:w-[400px] py-2 px-4 bg-[#e9e9e9] text-black flex justify-between items-center gap-2 md:gap-4 mt-5 rounded-full shadow-lg">
+			<div className="w-[280px] md:w-[400px] py-2 px-4 bg-white text-black flex justify-between items-center gap-2 md:gap-4 mt-5 rounded-full shadow-lg">
 				<div className="flex items-center">
 					<button
 						disabled={page === "1"}

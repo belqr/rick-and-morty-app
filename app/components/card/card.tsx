@@ -13,7 +13,7 @@ export default function Card({
 	return (
 		<>
 			<div
-				className="flex flex-col items-center justify-between backdrop-blur-sm bg-[#e9e9e9] hover:animate-neonPulse 
+				className="flex flex-col items-center justify-between backdrop-blur-sm bg-white hover:animate-neonPulse 
          w-full max-w-[250px] md:max-w-[280px] h-[320px] md:h-[440px] rounded-lg px-2 py-3 md:p-5 text-black"
 			>
 				<div className="w-full flex flex-col items-center gap-5 md">
