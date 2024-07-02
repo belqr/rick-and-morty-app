@@ -14,7 +14,7 @@ export default function Card({
 		<>
 			<div
 				className="flex flex-col items-center justify-between backdrop-blur-sm bg-[#e9e9e9] hover:animate-neonPulse 
-         w-full max-w-[250px] md:max-w-[280px] rounded-lg px-2 py-3 md:p-5 text-black"
+         w-full max-w-[250px] md:max-w-[280px] h-[320px] md:h-[440px] rounded-lg px-2 py-3 md:p-5 text-black"
 			>
 				<div className="w-full flex flex-col items-center gap-5 md">
 					<div className="flex flex-col items-center">
@@ -24,7 +24,7 @@ export default function Card({
 							className="w-[150px] md:w-[200px] rounded-full"
 						/>
 						<div className="w-full overflow-hidden">
-							<h2 className="text-[18px] md:text-[25px] font-black mb-2 md:mb-0 text-center">
+							<h2 className="text-[18px] md:text-[25px] font-black text-center">
 								{name}
 							</h2>
 							<span className="flex justify-center gap-1 mb-5 text-[13px] md:text-[16px]">

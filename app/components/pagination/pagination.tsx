@@ -1,6 +1,4 @@
-import axios from "axios";
 import Link from "next/link";
-import { useEffect } from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
 interface PaginationProps {
@@ -9,6 +7,9 @@ interface PaginationProps {
 	count: number;
 	next: string | null;
 	prev: string | null;
+	query: {
+		name: string;
+	};
 }
 
 export default function Pagination({
@@ -17,6 +18,7 @@ export default function Pagination({
 	count,
 	next,
 	prev,
+	query,
 }: PaginationProps) {
 	const prevPage = prev ? Number(page) - 1 : Number(page);
 	const nextPage = next ? Number(page) + 1 : Number(page);
@@ -34,7 +36,7 @@ export default function Pagination({
 						}`}
 					>
 						<Link
-							href={`/all-characters/?page=1`}
+							href={`/all-characters/?page=1&name=${query.name}`}
 							className="py-2 px-3 bg-transparent rounded-full hover:bg-gray-300 transition"
 						>
 							<p className="text-[14px] md:text-[20px] px-1 md:px-1.5"> 1 </p>
@@ -50,7 +52,7 @@ export default function Pagination({
 						}`}
 					>
 						<Link
-							href={`/all-characters/?page=${prevPage}`}
+							href={`/all-characters/?page=${prevPage}&name=${query.name}`}
 							className="p-2 bg-transparent rounded-full hover:bg-gray-300 transition"
 						>
 							<MdKeyboardArrowLeft className="text-[16px] md:text-[25px]" />
@@ -70,7 +72,7 @@ export default function Pagination({
 						}`}
 					>
 						<Link
-							href={`/all-characters/?page=${nextPage}`}
+							href={`/all-characters/?page=${nextPage}&name=${query.name}`}
 							className="p-2 bg-transparent rounded-full hover:bg-gray-300 transition"
 						>
 							<MdKeyboardArrowRight className="text-[16px] md:text-[25px]" />
@@ -86,7 +88,7 @@ export default function Pagination({
 						}`}
 					>
 						<Link
-							href={`/all-characters/?page=${pages}`}
+							href={`/all-characters/?page=${pages}&name=${query.name}`}
 							className="py-2 px-3 bg-transparent rounded-full hover:bg-gray-300 transition"
 						>
 							<p className="text-[14px] md:text-[20px]"> {pages} </p>

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Nav() {
 	return (
-		<nav className="w-full flex mb-10 pl-10">
+		<nav className="w-full flex my-10 pl-10">
 			<Link href="/">
 				<Image
 					src={returnHome}

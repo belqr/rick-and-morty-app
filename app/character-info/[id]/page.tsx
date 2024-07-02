@@ -1,85 +1,47 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import portal from "@/public/rick-morty.png";
 import { colorStatus } from "@/app/utils/characters-info";
 import { CardProps } from "@/app/all-characters/page";
-import { useParams, usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 
-export default function Home() {
-	const [character, setCharacter] = useState<CardProps>({
-		id: 0,
-		name: "",
-		status: "unknown",
-		gender: "",
-		image: "",
-		species: "",
-		location: {
-			name: "",
-		},
-		origin: {
-			name: "",
-		},
-		episode: {
-			name: "",
-			air_date: "",
-			episode: "",
-		},
-	});
+interface HomeProps {
+	params: {
+		id: string;
+	};
+	searchParams: {
+		page: string;
+	};
+}
 
-	const [loading, setLoading] = useState(true);
+export default async function Home({ params, searchParams }: HomeProps) {
+	const character: CardProps = await fetch(
+		`${process.env.NEXT_PUBLIC_API_URL}/characters/${params.id}`
+	)
+		.then((response) => response.json())
+		.catch((error) => {
+			console.log(error);
+		});
 
-	const searchParams = usePathname();
-	const params = useParams();
-	console.log(searchParams);
-
-	useEffect(() => {
-		fetch(`/api/characters/${params.id}`)
-			.then((response) => response.json())
-			.then((response) => {
-				setCharacter(response);
-			})
-			.catch((error) => {
-				console.log(error);
-			})
-			.finally(() => {
-				setLoading(false);
-			});
-	}, [params.id]);
-
-	console.log(character);
-
-	if (loading) {
-		return (
-			<div className="w-full h-dvh flex flex-col justify-center items-center gap-1 text-[50px] md:text-[100px] font-black animate-pulse cursor-wait">
-				<Image
-					src={portal}
-					alt="Rick And Morty Portal"
-					className="w-[150px] md:w-[300px] animate-pulse"
-				/>
-				<p>Loading...</p>
-			</div>
-		);
-	}
+	const firstEpisode = await fetch(character.episode[0]).then((response) =>
+		response.json()
+	);
 
 	return (
 		<div className="flex flex-col w-full h-screen items-center justify-center lg:px-20">
-			<div className="flex flex-col bg-[#e9e9e9] p-5 w-full h-screen lg:h-fit lg:max-w-[1400px] lg:rounded-lg text-black">
+			<div className="flex flex-col bg-[#e9e9e9] w-full h-full lg:h-fit lg:max-w-[1400px] lg:rounded-lg text-black">
 				<Link
-					href="/all-characters/?page=1"
-					className="w-full md:w-fit flex items-center"
+					href={`/all-characters/?page=${searchParams.page}`}
+					className="w-full md:w-fit flex items-center pt-5"
 				>
 					<MdKeyboardArrowLeft className="text-[30px] md:text-[60px] cursor-pointer" />
 					<p className="text-[25px]">Back</p>
 				</Link>
-				<div className="w-full flex flex-col lg:flex-row items-center md:items-center gap-10 ">
+				<div className="w-full flex flex-col lg:flex-row items-center md:items-center gap-10 px-5 lg:mb-5">
 					<img
 						src={character.image}
 						alt={character.name}
-						className="w-full md:max-w-[500px] lg:max-w-[700px] p-5"
+						className="w-full md:max-w-[600px] lg:max-w-[700px] p-5"
 					/>
 					<div className="w-full flex flex-col md:ml-5">
 						<h1 className="text-[30px] md:text-[40px] font-black text-center uppercase">
@@ -120,17 +82,17 @@ export default function Home() {
 								<ul className="flex flex-col gap-1 ml-3 text-[16px] md:text-[20px]">
 									<li className="flex items-center gap-3">
 										<span className="font-semibold italic">Episode name:</span>
-										{character.episode.name}
+										{firstEpisode.name}
 									</li>
 									<li className="flex items-center gap-3">
 										<span className="font-semibold italic">
 											Episode/Season:
 										</span>
-										{character.episode.episode}
+										{firstEpisode.episode}
 									</li>
 									<li className="flex items-center gap-3">
 										<span className="font-semibold italic">Air Date:</span>
-										{character.episode.air_date}
+										{firstEpisode.air_date}
 									</li>
 								</ul>
 							</div>
