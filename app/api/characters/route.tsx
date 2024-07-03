@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
 	const page = body.page || 1;
 	try {
 		const characters = await axios.get(
-			`https://rickandmortyapi.com/api/character/?page=${page}&name=${body.query.name}`
+			`https://rickandmortyapi.com/api/character/?page=${page}`
 		);
 		return NextResponse.json(characters.data, { status: 200 });
 	} catch (error) {

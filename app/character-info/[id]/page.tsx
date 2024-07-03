@@ -17,7 +17,7 @@ interface HomeProps {
 
 export default async function Home({ params, searchParams }: HomeProps) {
 	const character: CardProps = await fetch(
-		`${process.env.NEXT_PUBLIC_API_URL}/characters/${params.id}`
+		`${process.env.NEXT_PUBLIC_BASE_API_URL}/characters/${params.id}`
 	)
 		.then((response) => response.json())
 		.catch((error) => {

@@ -29,7 +29,7 @@ export type CardProps = {
 
 const getCharacters = async (page: string = "1", query?: { name?: string }) => {
 	const { info, results } = await fetch(
-		`${process.env.NEXT_PUBLIC_API_URL}/characters`,
+		`${process.env.NEXT_PUBLIC_BASE_API_URL}/characters`,
 		{
 			method: "POST",
 			body: JSON.stringify({
