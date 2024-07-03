@@ -31,8 +31,8 @@ export default async function Home({ params, searchParams }: HomeProps) {
 	const filterName = searchParams.name ? `&name=${searchParams.name}` : "";
 
 	return (
-		<div className="flex flex-col w-full lg:h-screen md:w-full justify-center items-center lg:px-20">
-			<div className="flex flex-col bg-white w-full lg:max-w-[1400px] lg:rounded-lg text-black">
+		<div className="flex flex-col w-full h-full lg:h-screen md:w-full justify-center items-center lg:px-20">
+			<div className="flex flex-col bg-white w-full h-screen lg:h-fit lg:max-w-[1400px] lg:rounded-lg text-black">
 				<Link
 					href={`/all-characters/?page=${searchParams.page}${filterName}`}
 					className="w-full md:w-fit flex items-center pt-5"
