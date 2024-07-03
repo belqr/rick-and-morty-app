@@ -70,7 +70,7 @@ export default async function CharactersPage({
 		<section className="w-full">
 			<Nav />
 			<div className="my-[25px] md:my-[50px] flex flex-col items-center">
-				<div className="w-fit flex flex-wrap justify-center gap-6 md:gap-8">
+				<div className="w-fit flex flex-wrap justify-center gap-8">
 					<Search page={page} />
 
 					{pageData && Array.isArray(pageData) && pageData.length > 0 ? (
