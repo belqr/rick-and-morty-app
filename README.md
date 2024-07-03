@@ -21,4 +21,4 @@ Esta aplicação permite aos usuários explorar personagens da série Rick and M
 - Busca por nome de personagem.
 - Filtros por status e gênero.
 
-[Visite o projeto online](https://rick-and-morty-app-lake.vercel.app/)
+[Visite o projeto online](https://rick-and-morty-app-eight-rose.vercel.app/)
