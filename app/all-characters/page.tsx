@@ -28,7 +28,7 @@ export type CardProps = {
 };
 
 const getCharacters = async (page: string = "1", query?: { name?: string }) => {
-	const { info, results } = await fetch(
+	const response = await fetch(
 		`${process.env.NEXT_PUBLIC_BASE_API_URL}/characters`,
 		{
 			method: "POST",
@@ -43,8 +43,8 @@ const getCharacters = async (page: string = "1", query?: { name?: string }) => {
 			console.log(err);
 		});
 	return {
-		pageInfo: info,
-		pageData: results,
+		pageInfo: response?.info,
+		pageData: response?.results,
 	};
 };
 
