@@ -27,10 +27,7 @@ export type CardProps = {
 	episode: string[];
 };
 
-const getCharacters = async (
-	page: string = "1",
-	query?: { name?: string; gender?: string; status?: string }
-) => {
+const getCharacters = async (page: string = "1", query?: { name?: string }) => {
 	const { info, results } = await fetch(
 		`${process.env.NEXT_PUBLIC_API_URL}/characters`,
 		{
@@ -57,8 +54,6 @@ export default async function CharactersPage({
 	searchParams: {
 		page: string;
 		name?: string;
-		gender?: string;
-		status?: string;
 	};
 }) {
 	const page = searchParams.page || "1";

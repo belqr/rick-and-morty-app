@@ -9,8 +9,6 @@ interface PaginationProps {
 	prev: string | null;
 	query?: {
 		name?: string;
-		status?: string;
-		gender?: string;
 	};
 }
 
