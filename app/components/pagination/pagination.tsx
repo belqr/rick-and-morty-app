@@ -7,8 +7,10 @@ interface PaginationProps {
 	count: number;
 	next: string | null;
 	prev: string | null;
-	query: {
-		name: string;
+	query?: {
+		name?: string;
+		status?: string;
+		gender?: string;
 	};
 }
 
@@ -18,14 +20,19 @@ export default function Pagination({
 	count,
 	next,
 	prev,
-	query,
+	query = {},
 }: PaginationProps) {
 	const prevPage = prev ? Number(page) - 1 : Number(page);
 	const nextPage = next ? Number(page) + 1 : Number(page);
 
+	const urlQueryString = () => {
+		const queryString = new URLSearchParams(query).toString();
+		return queryString ? `&${queryString}` : "";
+	};
+
 	return (
 		<div className="w-full flex justify-center mt-10 font-semibold">
-			<div className="w-[280px] md:w-[400px] py-2 px-4 bg-white text-black flex justify-between items-center gap-2 md:gap-4 mt-5 rounded-full shadow-lg">
+			<div className="w-[280px] md:w-[400px] p-2 bg-white text-black flex justify-between items-center gap-2 md:gap-4 mt-5 rounded-full shadow-lg">
 				<div className="flex items-center">
 					<button
 						disabled={page === "1"}
@@ -36,10 +43,10 @@ export default function Pagination({
 						}`}
 					>
 						<Link
-							href={`/all-characters/?page=1&name=${query.name}`}
+							href={`/all-characters/?page=1${urlQueryString()}`}
 							className="py-2 px-3 bg-transparent rounded-full hover:bg-gray-300 transition"
 						>
-							<p className="text-[14px] md:text-[20px] px-1 md:px-1.5"> 1 </p>
+							<p className="text-[14px] md:text-[20px] w-[20px]"> 1 </p>
 						</Link>
 					</button>
 
@@ -52,27 +59,30 @@ export default function Pagination({
 						}`}
 					>
 						<Link
-							href={`/all-characters/?page=${prevPage}&name=${query.name}`}
+							href={`/all-characters/?page=${prevPage}${urlQueryString()}`}
 							className="p-2 bg-transparent rounded-full hover:bg-gray-300 transition"
 						>
 							<MdKeyboardArrowLeft className="text-[16px] md:text-[25px]" />
 						</Link>
 					</button>
 				</div>
-				<span className="text-[16px] md:text-[20px] font-bold">
-					Page {page} of {pages}
-				</span>
+				<div className="flex text-[16px] md:text-[20px] gap-3">
+					Page{" "}
+					<span className="font-bold text-[18px] md:text-[22px]">{page}</span>{" "}
+					of{" "}
+					<span className="font-bold text-[18px] md:text-[22px]">{pages}</span>
+				</div>
 				<div className="flex items-center">
 					<button
-						disabled={page === "42"}
+						disabled={Number(page) === pages}
 						className={`flex ${
-							page === "42"
+							Number(page) === pages
 								? "text-gray-400 pointer-events-none"
 								: "text-black cursor-default"
 						}`}
 					>
 						<Link
-							href={`/all-characters/?page=${nextPage}&name=${query.name}`}
+							href={`/all-characters/?page=${nextPage}${urlQueryString()}`}
 							className="p-2 bg-transparent rounded-full hover:bg-gray-300 transition"
 						>
 							<MdKeyboardArrowRight className="text-[16px] md:text-[25px]" />
@@ -80,18 +90,18 @@ export default function Pagination({
 					</button>
 
 					<button
-						disabled={page === "42"}
+						disabled={Number(page) === pages}
 						className={`flex ${
-							page === "42"
+							Number(page) === pages
 								? "text-gray-400 pointer-events-none"
 								: "text-black cursor-default"
 						}`}
 					>
 						<Link
-							href={`/all-characters/?page=${pages}&name=${query.name}`}
+							href={`/all-characters/?page=${pages}${urlQueryString()}`}
 							className="py-2 px-3 bg-transparent rounded-full hover:bg-gray-300 transition"
 						>
-							<p className="text-[14px] md:text-[20px]"> {pages} </p>
+							<p className="text-[14px] md:text-[20px] w-[20px]"> {pages} </p>
 						</Link>
 					</button>
 				</div>

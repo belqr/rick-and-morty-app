@@ -12,7 +12,7 @@ export default function NotFound() {
 				<Image
 					src={RickMortyPortal}
 					alt="404 Error"
-					className="w-[300px] md:w-[550px] absolute top-[25px] md:top-[65px] animate-spin"
+					className="w-[300px] md:w-[550px] absolute top-[25px] md:top-[65px] animate-spin-slow"
 				/>
 				<p className="font-bold text-[18px] md:text-[25px] text-center">
 					A página que você está procurando não existe, parece que foi

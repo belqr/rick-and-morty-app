@@ -11,6 +11,7 @@ interface HomeProps {
 	};
 	searchParams: {
 		page: string;
+		name?: string;
 	};
 }
 
@@ -27,17 +28,19 @@ export default async function Home({ params, searchParams }: HomeProps) {
 		response.json()
 	);
 
+	const filterName = searchParams.name ? `&name=${searchParams.name}` : "";
+
 	return (
-		<div className="flex flex-col w-full h-screen items-center justify-center lg:px-20">
-			<div className="flex flex-col bg-[#e9e9e9] w-full h-full lg:h-fit lg:max-w-[1400px] lg:rounded-lg text-black">
+		<div className="flex flex-col w-full lg:h-screen md:w-full justify-center items-center lg:px-20">
+			<div className="flex flex-col bg-white w-full lg:max-w-[1400px] lg:rounded-lg text-black">
 				<Link
-					href={`/all-characters/?page=${searchParams.page}`}
+					href={`/all-characters/?page=${searchParams.page}${filterName}`}
 					className="w-full md:w-fit flex items-center pt-5"
 				>
 					<MdKeyboardArrowLeft className="text-[30px] md:text-[60px] cursor-pointer" />
 					<p className="text-[25px]">Back</p>
 				</Link>
-				<div className="w-full flex flex-col lg:flex-row items-center md:items-center gap-10 px-5 lg:mb-5">
+				<div className="w-full flex flex-col lg:flex-row items-center md:items-center gap-10 px-5 mb-10 lg:mb-5">
 					<img
 						src={character.image}
 						alt={character.name}

@@ -9,12 +9,15 @@ export default function Card({
 	gender,
 	image,
 	page,
-}: CardProps & { page: string }) {
+	filterName,
+}: CardProps & { page: string; filterName?: string }) {
+	const filter = filterName ? `&name=${filterName}` : "";
+
 	return (
 		<>
 			<div
 				className="flex flex-col items-center justify-between backdrop-blur-sm bg-white hover:animate-neonPulse 
-         w-full max-w-[250px] md:max-w-[280px] h-[320px] md:h-[440px] rounded-lg px-2 py-3 md:p-5 text-black"
+         w-full max-w-[250px] md:max-w-[280px] h-[320px] md:h-[440px] rounded-lg p-2 md:p-5 text-black"
 			>
 				<div className="w-full flex flex-col items-center gap-5 md">
 					<div className="flex flex-col items-center">
@@ -38,8 +41,8 @@ export default function Card({
 					</div>
 				</div>
 				<Link
-					href={`/character-info/${id}?page=${page}`}
-					className="w-full max-w-[100px] md:max-w-[150px] text-center text-[13px] md:text-[16px] font-bold my-3 p-2 bg-[#e9e9e9] 
+					href={`/character-info/${id}?page=${page}${filter}`}
+					className="w-full max-w-[100px] md:max-w-[150px] text-center text-[13px] md:text-[16px] font-bold my-3 p-2 bg-white 
                text-black rounded-lg border-solid border-2 border-black
                hover:bg-black hover:text-white cursor-pointer transition ease-in-out delay-150 duration-400"
 				>

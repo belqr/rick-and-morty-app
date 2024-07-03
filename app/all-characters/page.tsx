@@ -2,8 +2,11 @@ import Card from "../components/card/card";
 import Nav from "../components/nav/nav";
 import Pagination from "../components/pagination/pagination";
 import Search from "../components/search/search";
+import rickError from "../../public/rick-error.png";
+import Image from "next/image";
 
 export type CardProps = {
+	page: string;
 	id: number;
 	name: string;
 	status: "Alive" | "Dead" | "unknown";
@@ -24,14 +27,17 @@ export type CardProps = {
 	episode: string[];
 };
 
-const getCharacters = async (page: string = "1", query: { name: string }) => {
-	const { info, results, status } = await fetch(
+const getCharacters = async (
+	page: string = "1",
+	query?: { name?: string; gender?: string; status?: string }
+) => {
+	const { info, results } = await fetch(
 		`${process.env.NEXT_PUBLIC_API_URL}/characters`,
 		{
 			method: "POST",
 			body: JSON.stringify({
 				page: page,
-				query,
+				query: query,
 			}),
 		}
 	)
@@ -40,7 +46,6 @@ const getCharacters = async (page: string = "1", query: { name: string }) => {
 			console.log(err);
 		});
 	return {
-		status,
 		pageInfo: info,
 		pageData: results,
 	};
@@ -49,52 +54,64 @@ const getCharacters = async (page: string = "1", query: { name: string }) => {
 export default async function CharactersPage({
 	searchParams,
 }: {
-	searchParams: { page: string; name: string };
+	searchParams: {
+		page: string;
+		name?: string;
+		gender?: string;
+		status?: string;
+	};
 }) {
-	const page = searchParams.page;
-	const { pageInfo, pageData, status } = await getCharacters(page, {
-		name: searchParams.name,
-	});
+	const page = searchParams.page || "1";
+	const query = searchParams.name ? { name: searchParams.name } : undefined;
+
+	const { pageInfo, pageData } = await getCharacters(page, query);
 
 	return (
 		<section className="w-full">
 			<Nav />
 			<div className="my-[25px] md:my-[50px] flex flex-col items-center">
 				<div className="w-fit flex flex-wrap justify-center gap-6 md:gap-8">
-					<Search />
-					{status === 404 ? (
-						<h1 className="text-center text-4xl">404</h1>
+					<Search page={page} />
+
+					{pageData && Array.isArray(pageData) && pageData.length > 0 ? (
+						pageData.map((item: CardProps) => (
+							<Card
+								key={item.name}
+								id={item.id}
+								name={item.name}
+								status={item.status}
+								gender={item.gender}
+								image={item.image}
+								species={item.species}
+								location={item.location}
+								firstSeen={item.firstSeen}
+								origin={item.origin}
+								episode={item.episode}
+								page={page}
+								filterName={searchParams.name}
+							/>
+						))
 					) : (
-						pageData.map((item: CardProps) => {
-							return (
-								<Card
-									key={item.name}
-									id={item.id}
-									name={item.name}
-									status={item.status}
-									gender={item.gender}
-									image={item.image}
-									species={item.species}
-									location={item.location}
-									firstSeen={item.firstSeen}
-									origin={item.origin}
-									page={page}
-									episode={item.episode}
-								/>
-							);
-						})
+						<div className="flex flex-col items-center p-5 relative">
+							<Image
+								src={rickError}
+								alt="404 Error"
+								className="w-[90px] md:w-[150px] absolute top-10"
+							/>
+							<h1 className="text-center text-[100px] font-bold md:font-black md:text-[150px] tracking-wide">
+								404
+							</h1>
+							<p className="text-[16px] md:text-[25px] text-center">
+								O personagem que você pesquisou não foi encontrado
+							</p>
+						</div>
 					)}
 				</div>
-				<span
-					className="data-[hidden='true']:hidden"
-					data-hidden={status === 404}
-				>
-					<Pagination
-						page={page}
-						{...pageInfo}
-						query={{ name: searchParams.name }}
-					/>
-				</span>
+				<Pagination
+					page={page}
+					{...pageInfo}
+					query={searchParams.name ? { name: searchParams.name } : {}}
+				/>
 			</div>
 		</section>
 	);
