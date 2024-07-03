@@ -20,3 +20,5 @@ Esta aplicação permite aos usuários explorar personagens da série Rick and M
 - Detalhamento de personagens ao clicar em um card.
 - Busca por nome de personagem.
 - Filtros por status e gênero.
+
+- [Visite o projeto online](https://rick-and-morty-app-zeta-ashy.vercel.app/)
